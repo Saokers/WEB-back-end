@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sybinal.shop.mapper.InteractionDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.sybinal.shop.model.InteractionDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="note_data_id" property="noteDataId" jdbcType="INTEGER" />
+    <result column="make_emp" property="makeEmp" jdbcType="INTEGER" />
+    <result column="make_date" property="makeDate" jdbcType="TIMESTAMP" />
+    <result column="data_type" property="dataType" jdbcType="INTEGER" />
+    <result column="commentary_description" property="commentaryDescription" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, note_data_id, make_emp, make_date, data_type, commentary_description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from note_data_interaction_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectCount" parameterType="com.sybinal.shop.model.InteractionDetail" resultType="java.lang.Integer">
+   	SELECT
+		COUNT( * ) 
+	FROM
+		`note_data_interaction_detail` 
+	WHERE
+		note_data_id = #{noteDataId,jdbcType=INTEGER}
+		AND data_type =1
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from note_data_interaction_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sybinal.shop.model.InteractionDetail" >
+    insert into note_data_interaction_detail (id, note_data_id, make_emp, 
+      make_date, data_type, commentary_description
+      )
+    values (#{id,jdbcType=INTEGER}, #{noteDataId,jdbcType=INTEGER}, #{makeEmp,jdbcType=INTEGER}, 
+      #{makeDate,jdbcType=TIMESTAMP}, #{dataType,jdbcType=INTEGER}, #{commentaryDescription,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sybinal.shop.model.InteractionDetail" >
+    insert into note_data_interaction_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="noteDataId != null" >
+        note_data_id,
+      </if>
+      <if test="makeEmp != null" >
+        make_emp,
+      </if>
+      <if test="makeDate != null" >
+        make_date,
+      </if>
+      <if test="dataType != null" >
+        data_type,
+      </if>
+      <if test="commentaryDescription != null" >
+        commentary_description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="noteDataId != null" >
+        #{noteDataId,jdbcType=INTEGER},
+      </if>
+      <if test="makeEmp != null" >
+        #{makeEmp,jdbcType=INTEGER},
+      </if>
+      <if test="makeDate != null" >
+        #{makeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dataType != null" >
+        #{dataType,jdbcType=INTEGER},
+      </if>
+      <if test="commentaryDescription != null" >
+        #{commentaryDescription,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sybinal.shop.model.InteractionDetail" >
+    update note_data_interaction_detail
+    <set >
+      <if test="noteDataId != null" >
+        note_data_id = #{noteDataId,jdbcType=INTEGER},
+      </if>
+      <if test="makeEmp != null" >
+        make_emp = #{makeEmp,jdbcType=INTEGER},
+      </if>
+      <if test="makeDate != null" >
+        make_date = #{makeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dataType != null" >
+        data_type = #{dataType,jdbcType=INTEGER},
+      </if>
+      <if test="commentaryDescription != null" >
+        commentary_description = #{commentaryDescription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sybinal.shop.model.InteractionDetail" >
+    update note_data_interaction_detail
+    set note_data_id = #{noteDataId,jdbcType=INTEGER},
+      make_emp = #{makeEmp,jdbcType=INTEGER},
+      make_date = #{makeDate,jdbcType=TIMESTAMP},
+      data_type = #{dataType,jdbcType=INTEGER},
+      commentary_description = #{commentaryDescription,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+	<delete id="deleteHeadKey" parameterType="java.lang.Integer">
+		delete from note_data_interaction_detail where note_data_id=#{id,jdbcType=INTEGER}
+	</delete>
+	
+	<insert id="setInteraction" parameterType="com.sybinal.shop.model.InteractionDetail">
+	  insert into note_data_interaction_detail(id,note_data_id,make_emp,make_date,data_type,commentary_description)
+	  values (default,#{noteDataId},#{makeEmp},#{makeDate},#{dataType},#{commentaryDescription})
+	</insert>
+</mapper>

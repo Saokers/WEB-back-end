@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sybinal.shop.mapper.CartMapper">
+
+	<insert id="addCart" parameterType="com.sybinal.shop.model.Cart">
+		INSERT INTO cart(`id`, `product_id`, `user_id`, `quantity`, `sku_id`, `optionValueKeyGroup`, `create_time`,`json_data`)
+		values(#{id},#{productId},#{userId},#{quantity},#{skuId},#{optionValueKeyGroup},#{createTime},#{jsonData})
+	</insert>
+
+	<select id="getCartCount"
+		parameterType="com.sybinal.shop.model.Cart"
+		resultType="java.lang.Integer">
+		select count(*) from cart where user_id=#{userId}
+	</select> 
+
+	<resultMap type="com.sybinal.shop.model.Cart"
+		id="BaseCartMap">
+		<id column="T1_id" jdbcType="VARCHAR" property="id" />
+		<result column="T1_product_id" jdbcType="INTEGER" property="productId" />
+		<result column="T1_user_id" jdbcType="INTEGER" property="userId" />
+		<result column="T1_price" jdbcType="INTEGER" property="price" />	
+		<result column="T1_quantity" jdbcType="INTEGER" property="quantity" />
+		<result column="T1_sku_id" jdbcType="INTEGER" property="skuId" />
+		<result column="T1_option_value_key_group" jdbcType="VARCHAR" property="optionValueKeyGroup" />
+		<result column="T1_json_data" jdbcType="VARCHAR" property="jsonData" />	
+		<result column="T1_create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<collection property="product"
+			ofType="com.sybinal.shop.model.Product">
+			<id column="T2_ProductId" jdbcType="INTEGER" property="id" />
+			<result column="T2_ProductName" jdbcType="VARCHAR"
+				property="name" />
+			<result column="T2_ProductCategory_id" jdbcType="INTEGER"
+				property="categoryId" />
+			<result column="T2_ProductGeneral_explain" jdbcType="VARCHAR"
+				property="generalExplain" />
+			<result column="T2_ProductShop_price" jdbcType="INTEGER"
+				property="shopPrice" />
+			<result column="T2_ProductPrice" jdbcType="INTEGER"
+				property="price" />
+			<result column="T1_quantity" jdbcType="INTEGER"
+				property="quantity" />
+			<result column="T2_ProductHot" jdbcType="INTEGER" property="hot" />
+			<result column="T2_ProductProduct_status" jdbcType="INTEGER"
+				property="productStatus" />
+			<result column="T2_default_img" jdbcType="VARCHAR"
+				property="defaultImg" />
+			<result column="T2_update_user_id" jdbcType="INTEGER"
+				property="updateUserId" />
+		</collection>
+	</resultMap>
+	<select id="getCart" parameterType="com.sybinal.shop.model.Cart"
+		resultMap="BaseCartMap">
+		SELECT
+		t1.id AS T1_id,
+		t1.product_id AS T1_product_id,
+		t1.user_id AS T1_user_id,
+		t1.quantity AS T1_quantity,
+		t1.sku_id AS T1_sku_id,
+		t1.optionValueKeyGroup as T1_optionValueKeyGroup,
+		t1.json_data AS T1_json_data,
+		t1.create_time AS T1_create_time,
+		t1.quantity*t2.shop_price AS T1_price,
+		t2.id AS T2_ProductId,
+		t2.`name` AS T2_ProductName,
+		t2.category_id AS T2_ProductCategory_id,
+		t2.general_explain AS T2_ProductGeneral_explain,
+		t2.discount AS T2_ProductDiscount,
+		t2.shop_price AS T2_ProductShop_price,
+		t2.price AS T2_ProductPrice,
+		t2.quantity AS T2_ProductQuantity,
+		t2.hot AS T2_ProductHot,
+		t2.product_status AS T2_ProductProduct_status,
+		t2.default_img AS T2_default_img
+		FROM
+		cart AS t1
+		LEFT JOIN product AS t2 ON t1.product_id =
+		t2.id AND t1.user_id =#{userId}
+	</select>
+
+	<select id="searchCart"
+		parameterType="com.sybinal.shop.model.Cart"
+		resultType="java.lang.Integer">
+		SELECT IFNULL(sum(cart.quantity),0) AS quantity
+		FROM cart
+		WHERE
+		cart.product_id = #{productId}
+	</select>
+
+	<update id="updateQuantity"
+		parameterType="com.sybinal.shop.model.Cart">
+		update cart set
+		quantity=#{quantity} where
+		product_id=#{productId}
+	</update>
+	<delete id="removeCart">
+		DELETE FROM cart WHERE `user_id` = #{userId} AND `product_id`=#{productId}
+	</delete>
+	<delete id="removeAllCart">
+		DELETE FROM cart WHERE `user_id` = #{userId}
+	</delete>
+	
+</mapper>

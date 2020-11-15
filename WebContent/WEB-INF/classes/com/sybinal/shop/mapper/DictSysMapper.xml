@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sybinal.shop.mapper.DictSysMapper" >
+  <resultMap id="BaseResultMap" type="com.sybinal.shop.model.DictSys" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dict_type" property="dictType" jdbcType="VARCHAR" />
+    <result column="dict_code" property="dictCode" jdbcType="VARCHAR" />
+    <result column="dict_name" property="dictName" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="flag_status" property="flagStatus" jdbcType="DECIMAL" />
+    <result column="flag_sort" property="flagSort" jdbcType="DECIMAL" />
+    <result column="make_emp" property="makeEmp" jdbcType="INTEGER" />
+    <result column="make_date" property="makeDate" jdbcType="TIMESTAMP" />
+    <result column="modify_emp" property="modifyEmp" jdbcType="INTEGER" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dict_type, dict_code, dict_name, remark, flag_status, flag_sort, make_emp, make_date, 
+    modify_emp, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from system_data_dict_sys
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from system_data_dict_sys
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sybinal.shop.model.DictSys" >
+    insert into system_data_dict_sys (id, dict_type, dict_code, 
+      dict_name, remark, flag_status, 
+      flag_sort, make_emp, make_date, 
+      modify_emp, modify_date)
+    values (#{id,jdbcType=INTEGER}, #{dictType,jdbcType=VARCHAR}, #{dictCode,jdbcType=VARCHAR}, 
+      #{dictName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{flagStatus,jdbcType=DECIMAL}, 
+      #{flagSort,jdbcType=DECIMAL}, #{makeEmp,jdbcType=INTEGER}, #{makeDate,jdbcType=TIMESTAMP}, 
+      #{modifyEmp,jdbcType=INTEGER}, #{modifyDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sybinal.shop.model.DictSys" >
+    insert into system_data_dict_sys
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dictType != null" >
+        dict_type,
+      </if>
+      <if test="dictCode != null" >
+        dict_code,
+      </if>
+      <if test="dictName != null" >
+        dict_name,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="flagStatus != null" >
+        flag_status,
+      </if>
+      <if test="flagSort != null" >
+        flag_sort,
+      </if>
+      <if test="makeEmp != null" >
+        make_emp,
+      </if>
+      <if test="makeDate != null" >
+        make_date,
+      </if>
+      <if test="modifyEmp != null" >
+        modify_emp,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dictType != null" >
+        #{dictType,jdbcType=VARCHAR},
+      </if>
+      <if test="dictCode != null" >
+        #{dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null" >
+        #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="flagStatus != null" >
+        #{flagStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="flagSort != null" >
+        #{flagSort,jdbcType=DECIMAL},
+      </if>
+      <if test="makeEmp != null" >
+        #{makeEmp,jdbcType=INTEGER},
+      </if>
+      <if test="makeDate != null" >
+        #{makeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyEmp != null" >
+        #{modifyEmp,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sybinal.shop.model.DictSys" >
+    update system_data_dict_sys
+    <set >
+      <if test="dictType != null" >
+        dict_type = #{dictType,jdbcType=VARCHAR},
+      </if>
+      <if test="dictCode != null" >
+        dict_code = #{dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null" >
+        dict_name = #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="flagStatus != null" >
+        flag_status = #{flagStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="flagSort != null" >
+        flag_sort = #{flagSort,jdbcType=DECIMAL},
+      </if>
+      <if test="makeEmp != null" >
+        make_emp = #{makeEmp,jdbcType=INTEGER},
+      </if>
+      <if test="makeDate != null" >
+        make_date = #{makeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyEmp != null" >
+        modify_emp = #{modifyEmp,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sybinal.shop.model.DictSys" >
+    update system_data_dict_sys
+    set dict_type = #{dictType,jdbcType=VARCHAR},
+      dict_code = #{dictCode,jdbcType=VARCHAR},
+      dict_name = #{dictName,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      flag_status = #{flagStatus,jdbcType=DECIMAL},
+      flag_sort = #{flagSort,jdbcType=DECIMAL},
+      make_emp = #{makeEmp,jdbcType=INTEGER},
+      make_date = #{makeDate,jdbcType=TIMESTAMP},
+      modify_emp = #{modifyEmp,jdbcType=INTEGER},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

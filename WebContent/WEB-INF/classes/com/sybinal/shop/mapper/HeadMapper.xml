@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sybinal.shop.mapper.HeadMapper">
+	<resultMap id="BaseResultMap" type="com.sybinal.shop.model.Head">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="note_content" property="noteContent" jdbcType="VARCHAR" />
+		<result column="data_dict_id" property="dataDictId" jdbcType="INTEGER" />
+		<result column="flag_delete" property="flagDelete" jdbcType="INTEGER" />
+		<result column="make_emp" property="makeEmp" jdbcType="INTEGER" />
+		<result column="make_date" property="makeDate" jdbcType="TIMESTAMP" />
+		<result column="modify_emp" property="modifyEmp" jdbcType="INTEGER" />
+		<result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, note_content, data_dict_id, flag_delete, make_emp,
+		make_date,
+		modify_emp, modify_date
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from note_data_head
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		note_data_head
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="com.sybinal.shop.model.Head">
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		insert into note_data_head (id,data_dict_id,make_emp,make_date)
+		values
+		(#{id,jdbcType=INTEGER},#{dataDictId,jdbcType=INTEGER},#{makeEmp,jdbcType=INTEGER},
+		#{makeDate,jdbcType=TIMESTAMP})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.sybinal.shop.model.Head">
+		insert into note_data_head
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="noteContent != null">
+				note_content,
+			</if>
+			<if test="dataDictId != null">
+				data_dict_id,
+			</if>
+			<if test="flagDelete != null">
+				flag_delete,
+			</if>
+			<if test="makeEmp != null">
+				make_emp,
+			</if>
+			<if test="makeDate != null">
+				make_date,
+			</if>
+			<if test="modifyEmp != null">
+				modify_emp,
+			</if>
+			<if test="modifyDate != null">
+				modify_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="noteContent != null">
+				#{noteContent,jdbcType=VARCHAR},
+			</if>
+			<if test="dataDictId != null">
+				#{dataDictId,jdbcType=INTEGER},
+			</if>
+			<if test="flagDelete != null">
+				#{flagDelete,jdbcType=INTEGER},
+			</if>
+			<if test="makeEmp != null">
+				#{makeEmp,jdbcType=INTEGER},
+			</if>
+			<if test="makeDate != null">
+				#{makeDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyEmp != null">
+				#{modifyEmp,jdbcType=INTEGER},
+			</if>
+			<if test="modifyDate != null">
+				#{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.sybinal.shop.model.Head">
+		update
+		note_data_head set note_content =
+		#{noteContent,jdbcType=VARCHAR},data_dict_id =
+		#{dataDictId,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.sybinal.shop.model.Head">
+		update
+		note_data_head
+		set note_content = #{noteContent,jdbcType=VARCHAR},
+		data_dict_id = #{dataDictId,jdbcType=INTEGER},
+		flag_delete =
+		#{flagDelete,jdbcType=INTEGER},
+		make_emp = #{makeEmp,jdbcType=INTEGER},
+		make_date = #{makeDate,jdbcType=TIMESTAMP},
+		modify_emp =
+		#{modifyEmp,jdbcType=INTEGER},
+		modify_date =
+		#{modifyDate,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<resultMap type="com.sybinal.shop.model.SystemDict" id="BaseMap">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="dict_code" property="dictCode" jdbcType="VARCHAR" />
+		<result column="dict_name" property="dictName" jdbcType="VARCHAR" />
+		<result column="flag_sort" property="flag_sort" jdbcType="DECIMAL" />
+	</resultMap>
+	<select id="getSysDataDict" parameterType="java.lang.String"
+		resultMap="BaseMap">
+		select id,dict_code,dict_name,flag_sort from
+		system_data_dict_sys where dict_type =#{dictType}
+	</select>
+
+	<resultMap type="com.sybinal.shop.model.Head" id="DataMap">
+		<id column="T1_id" jdbcType="INTEGER" property="id" />
+		<result column="T1_note_content" jdbcType="VARCHAR" property="noteContent" />
+		<result column="T1_data_dict_id" jdbcType="INTEGER" property="dataDictId" />
+		<result column="topic_name" jdbcType="VARCHAR" property="topicName" />
+		<result column="is_praise" jdbcType="INTEGER" property="isPraise" />
+		<result column="is_collection" jdbcType="INTEGER" property="isCollection" />
+		<result column="praise_num" jdbcType="INTEGER" property="praiseNum" />
+		<result column="collection_num" jdbcType="INTEGER" property="collectionNum" />
+		<result column="commentary_num" jdbcType="INTEGER" property="commentaryNum" />
+		<result column="T1_make_emp" jdbcType="INTEGER" property="makeEmp" />
+		<result column="T6_userName" jdbcType="VARCHAR" property="userName" />
+		<result column="T6_image" jdbcType="VARCHAR" property="image" />
+		<result column="T1_make_date" jdbcType="TIMESTAMP" property="makeDate" />
+		<collection property="label_rows_data" ofType="com.sybinal.shop.model.LabelDetail">
+			<id column="T2_id" jdbcType="INTEGER" property="id" />
+			<result column="T2_note_data_id" jdbcType="INTEGER" property="noteDataId" />
+			<result column="T2_data_dict_id" jdbcType="INTEGER" property="dataDictId" />
+			<result column="lable_name" jdbcType="VARCHAR" property="labelName" />
+		</collection>
+		<collection property="attachment_rows_data"
+			ofType="com.sybinal.shop.model.AttachmentDetail">
+			<id column="T3_id" jdbcType="INTEGER" property="id" />
+			<result column="T3_attachment_name" jdbcType="VARCHAR"
+				property="attachmentName" />
+			<result column="T3_attachment_path" jdbcType="VARCHAR"
+				property="attachmentPath" />
+		</collection>
+		<collection property="interaction_rows_data"
+			ofType="com.sybinal.shop.model.InteractionDetail">
+			<result column="T5_commentary_description" jdbcType="VARCHAR"
+				property="commentaryDescription" />
+		</collection>
+	</resultMap>
+	<select id="getNoteData" parameterType="com.sybinal.shop.model.HeadVo"
+		resultMap="DataMap">
+		<include refid="NOTE_Datas"></include>
+		where T1.make_emp=#{makeEmp,jdbcType=INTEGER} order by T1.make_date
+	</select>
+
+	<select id="getAllNoteData" parameterType="com.sybinal.shop.model.HeadVo"
+		resultMap="DataMap">
+		<include refid="NOTE_Datas" />
+		order by T1.make_date
+	</select>
+
+	<sql id="NOTE_Datas">
+		SELECT
+		T1.id AS T1_id,
+		T1.note_content AS T1_note_content,
+		T1.data_dict_id AS
+		T1_data_dict_id,
+		system_data_dict_sys.dict_name as
+		topic_name,
+		(select count(*)
+		from
+		note_data_interaction_detail
+		where
+		note_data_interaction_detail.data_type=1 AND
+		note_data_interaction_detail.note_data_id = T1.id AND T1.make_emp=1)as
+		is_praise,
+		(select count(*) from
+		note_data_interaction_detail where
+		note_data_interaction_detail.data_type=2 AND
+		note_data_interaction_detail.note_data_id = T1.id AND T1.make_emp=1)as
+		is_collection,
+		(select count(*) from
+		note_data_interaction_detail where
+		note_data_interaction_detail.data_type=1 AND
+		note_data_interaction_detail.note_data_id = T1.id)as praise_num,
+		(select count(*) from note_data_interaction_detail where
+		note_data_interaction_detail.data_type=2 AND
+		note_data_interaction_detail.note_data_id = T1.id)as collection_num,
+		(select count(*) from note_data_interaction_detail where
+		note_data_interaction_detail.data_type=3 AND
+		note_data_interaction_detail.note_data_id = T1.id)as commentary_num,
+		T1.make_emp AS T1_make_emp,
+		T1.make_date AS T1_make_date,
+		T2.id AS
+		T2_id,
+		T2.note_data_id AS T2_note_data_id,
+		T2.data_dict_id AS
+		T2_data_dict_id,
+		T3.id AS T3_id,
+		T3.attachment_name AS
+		T3_attachment_name,
+		T3.attachment_path AS T3_attachment_path,
+		T4.dict_name as lable_name,
+		T5.commentary_description AS T5_commentary_description,
+		T6.user_name as T6_userName,
+		T6.image as T6_image
+		FROM
+		(select
+		id,note_content,make_emp,make_date,data_dict_id from note_data_head
+		order by note_data_head.make_date ASC LIMIT #{pageNum},#{pageSize}) AS
+		T1 LEFT JOIN system_data_dict_sys
+		on T1.data_dict_id =
+		system_data_dict_sys.id and
+		system_data_dict_sys.dict_type=11 LEFT JOIN
+		note_data_label_detail AS
+		T2 on T1.id = T2.note_data_id
+		LEFT JOIN
+		note_data_attachment_detail AS T3 on T1.id = T3.note_data_id
+		LEFT JOIN
+		system_data_dict_sys T4 on T2.data_dict_id=T4.id and
+		T4.dict_type = 10
+		LEFT JOIN 
+		note_data_interaction_detail AS T5 on T1.id=T5.note_data_id and T5.data_type=3
+		LEFT JOIN
+       `user` AS T6 on T1.make_emp=T6.id
+	</sql>
+
+	<select id="getCountByMakeEmp" parameterType="com.sybinal.shop.model.Head"
+		resultType="java.lang.Integer">
+		select count(*) from note_data_head where
+		make_emp=#{makeEmp,jdbcType=INTEGER}
+	</select>
+
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(*) from
+		note_data_head
+	</select>
+
+	<resultMap type="com.sybinal.shop.model.Head" id="ShopMap">
+		<id column="T1_id" jdbcType="INTEGER" property="id" />
+		<result column="T1_note_content" jdbcType="VARCHAR" property="noteContent" />
+		<result column="topic_name" jdbcType="VARCHAR" property="topicName" />
+		<result column="T1_make_emp" jdbcType="INTEGER" property="makeEmp" />
+		<result column="T1_make_date" jdbcType="TIMESTAMP" property="makeDate" />
+		<result column="T6_userName" jdbcType="VARCHAR" property="userName" />
+		<result column="T6_image" jdbcType="VARCHAR" property="image" />
+		<collection property="label_rows_data" ofType="com.sybinal.shop.model.LabelDetail">
+			<result column="lable_name" jdbcType="VARCHAR" property="labelName" />
+		</collection>
+		<collection property="interaction_rows_data"
+			ofType="com.sybinal.shop.model.InteractionDetail">
+			<result column="T5_commentary_description" jdbcType="VARCHAR"
+				property="commentaryDescription" />
+		</collection>
+	</resultMap>
+
+	<sql id="SHOP_NOTE_DATAS">
+		SELECT
+		T1.id AS T1_id,
+		T1.note_content AS T1_note_content,
+		system_data_dict_sys.dict_name as
+		topic_name,
+		T1.make_emp AS
+		T1_make_emp,
+		T1.make_date AS T1_make_date,
+		T4.dict_name as lable_name,
+		T5.commentary_description AS T5_commentary_description,
+		T6.user_name as T6_userName,
+		T6.image as T6_image
+		FROM
+		(select
+		id,note_content,make_emp,make_date,data_dict_id from note_data_head
+		order by note_data_head.make_date ASC LIMIT #{pageNum},#{pageSize}) AS T1
+		LEFT JOIN
+		system_data_dict_sys on T1.data_dict_id =system_data_dict_sys.id and system_data_dict_sys.dict_type=11 
+		LEFT JOIN
+		note_data_label_detail AS T2 on T1.id = T2.note_data_id
+		LEFT JOIN
+		note_data_attachment_detail AS T3 on T1.id = T3.note_data_id
+		LEFT JOIN
+		system_data_dict_sys T4 on T2.data_dict_id=T4.id and T4.dict_type = 10
+		LEFT JOIN 
+		note_data_interaction_detail AS T5 on T1.id=T5.note_data_id and T5.data_type=3
+		LEFT JOIN
+       `user` AS T6 on T1.make_emp=T6.id
+	</sql>
+	<select id="getManageNoteData" resultMap="ShopMap"
+		parameterType="com.sybinal.shop.model.HeadVo">
+		<include refid="SHOP_NOTE_DATAS"></include>
+	</select>
+
+	<sql id="ONE_NOTE_DATA">
+		SELECT
+		T1.id AS T1_id,
+		T1.note_content AS T1_note_content,
+		system_data_dict_sys.dict_name as
+		topic_name,
+		T1.make_emp AS
+		T1_make_emp,
+		T1.make_date AS T1_make_date,
+		T4.dict_name as lable_name,
+		T5.commentary_description AS T5_commentary_description,
+		T6.attachment_name
+		as T6_attachmentName,
+		T6.attachment_path as T6_attachmentPath,
+		T7.user_name as T7_userName,
+		T7.image as T7_image
+		FROM
+		(select
+		id,note_content,make_emp,make_date,data_dict_id from
+		note_data_head)
+		AS T1
+		LEFT JOIN system_data_dict_sys on T1.data_dict_id=
+		system_data_dict_sys.id and system_data_dict_sys.dict_type=11 
+		LEFT JOIN
+		note_data_label_detail AS T2 on T1.id = T2.note_data_id
+		LEFT JOIN
+		note_data_attachment_detail AS T3 on T1.id = T3.note_data_id
+		LEFT JOIN
+		system_data_dict_sys T4 on T2.data_dict_id=T4.id and T4.dict_type = 10
+		LEFT JOIN 
+		note_data_attachment_detail AS T6 on T1.id=T6.note_data_id
+		LEFT JOIN 
+		note_data_interaction_detail AS T5 on T1.id=T5.note_data_id and T5.data_type=3
+		LEFT JOIN
+       `user` AS T6 on T1.make_emp=T7.id
+	</sql>
+
+	<resultMap type="com.sybinal.shop.model.Head" id="ShopOneMap">
+		<id column="T1_id" jdbcType="INTEGER" property="id" />
+		<result column="T1_note_content" jdbcType="VARCHAR" property="noteContent" />
+		<result column="topic_name" jdbcType="VARCHAR" property="topicName" />
+		<result column="T1_make_emp" jdbcType="INTEGER" property="makeEmp" />
+		<result column="T1_make_date" jdbcType="TIMESTAMP" property="makeDate" />
+		<result column="T7_userName" jdbcType="VARCHAR" property="userName" />
+		<result column="T7_image" jdbcType="VARCHAR" property="image" />
+		<collection property="label_rows_data" ofType="com.sybinal.shop.model.LabelDetail">
+			<result column="lable_name" jdbcType="VARCHAR" property="labelName" />
+		</collection>
+		<collection property="attachment_rows_data"
+			ofType="com.sybinal.shop.model.AttachmentDetail">
+			<result column="T6_attachmentName" jdbcType="VARCHAR"
+				property="attachmentName" />
+			<result column="T6_attachmentPath" jdbcType="VARCHAR"
+				property="attachmentPath" />
+		</collection>
+		<collection property="interaction_rows_data"
+			ofType="com.sybinal.shop.model.InteractionDetail">
+			<result column="T5_commentary_description" jdbcType="VARCHAR"
+				property="commentaryDescription" />
+		</collection>
+	</resultMap>
+	<select id="getManageNoteDataById" parameterType="java.lang.Integer"
+		resultMap="ShopOneMap">
+		<include refid="ONE_NOTE_DATA"></include>
+		where T1.id=#{id,jdbcType=INTEGER}
+	</select>
+</mapper>

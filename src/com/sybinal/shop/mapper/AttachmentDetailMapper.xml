@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sybinal.shop.mapper.AttachmentDetailMapper">
+	<resultMap id="BaseResultMap" type="com.sybinal.shop.model.AttachmentDetail">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="note_data_id" property="noteDataId" jdbcType="INTEGER" />
+		<result column="attachment_name" property="attachmentName"
+			jdbcType="VARCHAR" />
+		<result column="attachment_path" property="attachmentPath"
+			jdbcType="VARCHAR" />
+		<result column="make_emp" property="makeEmp" jdbcType="INTEGER" />
+		<result column="make_date" property="makeDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, note_data_id, attachment_name, attachment_path,
+		make_emp, make_date
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from note_data_attachment_detail
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		note_data_attachment_detail
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="com.sybinal.shop.model.Head">
+		insert into note_data_attachment_detail (id,note_data_id,
+		attachment_name,attachment_path,make_emp,make_date)
+		values
+		<foreach collection="attachment_rows_data" item="item" index="index"
+			separator=",">
+			(default, #{id,jdbcType=INTEGER},
+			#{item.attachmentName,jdbcType=VARCHAR},
+			#{item.attachmentPath,jdbcType=VARCHAR},#{makeEmp,jdbcType=INTEGER},
+			#{makeDate,jdbcType=TIMESTAMP})
+		</foreach>
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.sybinal.shop.model.AttachmentDetail">
+		insert into note_data_attachment_detail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="noteDataId != null">
+				note_data_id,
+			</if>
+			<if test="attachmentName != null">
+				attachment_name,
+			</if>
+			<if test="attachmentPath != null">
+				attachment_path,
+			</if>
+			<if test="makeEmp != null">
+				make_emp,
+			</if>
+			<if test="makeDate != null">
+				make_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="noteDataId != null">
+				#{noteDataId,jdbcType=INTEGER},
+			</if>
+			<if test="attachmentName != null">
+				#{attachmentName,jdbcType=VARCHAR},
+			</if>
+			<if test="attachmentPath != null">
+				#{attachmentPath,jdbcType=VARCHAR},
+			</if>
+			<if test="makeEmp != null">
+				#{makeEmp,jdbcType=INTEGER},
+			</if>
+			<if test="makeDate != null">
+				#{makeDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.sybinal.shop.model.AttachmentDetail">
+		update note_data_attachment_detail
+		<set>
+			<if test="noteDataId != null">
+				note_data_id = #{noteDataId,jdbcType=INTEGER},
+			</if>
+			<if test="attachmentName != null">
+				attachment_name = #{attachmentName,jdbcType=VARCHAR},
+			</if>
+			<if test="attachmentPath != null">
+				attachment_path = #{attachmentPath,jdbcType=VARCHAR},
+			</if>
+			<if test="makeEmp != null">
+				make_emp = #{makeEmp,jdbcType=INTEGER},
+			</if>
+			<if test="makeDate != null">
+				make_date = #{makeDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.sybinal.shop.model.AttachmentDetail">
+		update
+		note_data_attachment_detail
+		set note_data_id =
+		#{noteDataId,jdbcType=INTEGER},
+		attachment_name =
+		#{attachmentName,jdbcType=VARCHAR},
+		attachment_path =
+		#{attachmentPath,jdbcType=VARCHAR},
+		make_emp =
+		#{makeEmp,jdbcType=INTEGER},
+		make_date = #{makeDate,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<delete id="deleteByHeadKey" parameterType="java.lang.Integer">
+		delete from note_data_attachment_detail where note_data_id=#{id}
+	</delete>
+</mapper>

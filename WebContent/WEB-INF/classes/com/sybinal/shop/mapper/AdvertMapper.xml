@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sybinal.shop.mapper.AdvertMapper">
+
+	<resultMap type="com.sybinal.shop.model.Advert" id="advertMap">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="sort_id" jdbcType="INTEGER" property="sortId" />
+		<result column="url" jdbcType="VARCHAR" property="url" />
+		<result column="img" jdbcType="TIMESTAMP" property="image" />
+	</resultMap>
+	
+	<select id="selectAdvertByCondition" resultMap="advertMap">
+		select * from
+		advert order by sort_id
+	</select>
+
+	<select id="selectCountByCondition" resultType="java.lang.Integer">
+		select count(*)
+		from advert
+	</select>
+
+	<update id="updateImage" parameterType="com.sybinal.shop.model.Advert">
+		update advert set
+		img=#{image} where id=#{id}
+	</update>
+
+	<delete id="deleteAdert" parameterType="java.lang.Integer">
+		delete from advert where
+		id=#{id}
+	</delete>
+
+	<insert id="insertImage" parameterType="com.sybinal.shop.model.Advert">
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		insert into
+		advert(sort_id,img) values(#{sortId},#{image})
+	</insert>
+
+	<select id="getMaxSortId" resultType="java.lang.Integer">
+		select max(sort_id) from
+		advert
+	</select>
+
+	<update id="updateUrl" parameterType="com.sybinal.shop.model.Advert">
+		update advert set
+		url=#{url} where sort_id=#{sortId}
+	</update>
+</mapper>

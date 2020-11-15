@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sybinal.shop.mapper.NoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.sybinal.shop.model.Notice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="notice_type" property="noticeType" jdbcType="INTEGER" />
+    <result column="notice_date" property="noticeDate" jdbcType="TIMESTAMP" />
+    <result column="notice_info" property="noticeInfo" jdbcType="VARCHAR" />
+    <result column="bill_pkid" property="billPkid" jdbcType="INTEGER" />
+    <result column="to_emp" property="toEmp" jdbcType="INTEGER" />
+    <result column="flag_status" property="flagStatus" jdbcType="INTEGER" />
+    <result column="receive_emp" property="receiveEmp" jdbcType="INTEGER" />
+    <result column="make_emp" property="makeEmp" jdbcType="INTEGER" />
+    <result column="make_date" property="makeDate" jdbcType="TIMESTAMP" />
+    <result column="modify_emp" property="modifyEmp" jdbcType="INTEGER" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, notice_type, notice_date, notice_info, bill_pkid, to_emp, flag_status, receive_emp, 
+    make_emp, make_date, modify_emp, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from system_notice
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from system_notice
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sybinal.shop.model.Notice" >
+    insert into system_notice (id, notice_type, notice_date, 
+      notice_info, bill_pkid, to_emp, 
+      flag_status, receive_emp, make_emp, 
+      make_date, modify_emp, modify_date
+      )
+    values (#{id,jdbcType=INTEGER}, #{noticeType,jdbcType=INTEGER}, #{noticeDate,jdbcType=TIMESTAMP}, 
+      #{noticeInfo,jdbcType=VARCHAR}, #{billPkid,jdbcType=INTEGER}, #{toEmp,jdbcType=INTEGER}, 
+      #{flagStatus,jdbcType=INTEGER}, #{receiveEmp,jdbcType=INTEGER}, #{makeEmp,jdbcType=INTEGER}, 
+      #{makeDate,jdbcType=TIMESTAMP}, #{modifyEmp,jdbcType=INTEGER}, #{modifyDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sybinal.shop.model.Notice" >
+    insert into system_notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="noticeType != null" >
+        notice_type,
+      </if>
+      <if test="noticeDate != null" >
+        notice_date,
+      </if>
+      <if test="noticeInfo != null" >
+        notice_info,
+      </if>
+      <if test="billPkid != null" >
+        bill_pkid,
+      </if>
+      <if test="toEmp != null" >
+        to_emp,
+      </if>
+      <if test="flagStatus != null" >
+        flag_status,
+      </if>
+      <if test="receiveEmp != null" >
+        receive_emp,
+      </if>
+      <if test="makeEmp != null" >
+        make_emp,
+      </if>
+      <if test="makeDate != null" >
+        make_date,
+      </if>
+      <if test="modifyEmp != null" >
+        modify_emp,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="noticeType != null" >
+        #{noticeType,jdbcType=INTEGER},
+      </if>
+      <if test="noticeDate != null" >
+        #{noticeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="noticeInfo != null" >
+        #{noticeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="billPkid != null" >
+        #{billPkid,jdbcType=INTEGER},
+      </if>
+      <if test="toEmp != null" >
+        #{toEmp,jdbcType=INTEGER},
+      </if>
+      <if test="flagStatus != null" >
+        #{flagStatus,jdbcType=INTEGER},
+      </if>
+      <if test="receiveEmp != null" >
+        #{receiveEmp,jdbcType=INTEGER},
+      </if>
+      <if test="makeEmp != null" >
+        #{makeEmp,jdbcType=INTEGER},
+      </if>
+      <if test="makeDate != null" >
+        #{makeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyEmp != null" >
+        #{modifyEmp,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sybinal.shop.model.Notice" >
+    update system_notice
+    <set >
+      <if test="noticeType != null" >
+        notice_type = #{noticeType,jdbcType=INTEGER},
+      </if>
+      <if test="noticeDate != null" >
+        notice_date = #{noticeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="noticeInfo != null" >
+        notice_info = #{noticeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="billPkid != null" >
+        bill_pkid = #{billPkid,jdbcType=INTEGER},
+      </if>
+      <if test="toEmp != null" >
+        to_emp = #{toEmp,jdbcType=INTEGER},
+      </if>
+      <if test="flagStatus != null" >
+        flag_status = #{flagStatus,jdbcType=INTEGER},
+      </if>
+      <if test="receiveEmp != null" >
+        receive_emp = #{receiveEmp,jdbcType=INTEGER},
+      </if>
+      <if test="makeEmp != null" >
+        make_emp = #{makeEmp,jdbcType=INTEGER},
+      </if>
+      <if test="makeDate != null" >
+        make_date = #{makeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyEmp != null" >
+        modify_emp = #{modifyEmp,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sybinal.shop.model.Notice" >
+    update system_notice
+    set notice_type = #{noticeType,jdbcType=INTEGER},
+      notice_date = #{noticeDate,jdbcType=TIMESTAMP},
+      notice_info = #{noticeInfo,jdbcType=VARCHAR},
+      bill_pkid = #{billPkid,jdbcType=INTEGER},
+      to_emp = #{toEmp,jdbcType=INTEGER},
+      flag_status = #{flagStatus,jdbcType=INTEGER},
+      receive_emp = #{receiveEmp,jdbcType=INTEGER},
+      make_emp = #{makeEmp,jdbcType=INTEGER},
+      make_date = #{makeDate,jdbcType=TIMESTAMP},
+      modify_emp = #{modifyEmp,jdbcType=INTEGER},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
